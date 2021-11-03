@@ -23,6 +23,19 @@
           <% end %>
         </tr>
       </table>
+      <div>
+        <% @book.book_comments.each do |book_comment| %>
+        <p><%= attachment_image_tag(@book.user, :profile_image, :fill, 100, 100, fallback: 'no-image-icon.jpg') %></p>
+        <%= book_comment.user.name %>
+        <% if book_comment.user == current_user %>
+        <%= link_to 'Destroy', book_book_comment_path(book_comment.book, book_comment), method: :delete, class: "btn btn-sm btn-danger" %>
+        <% end %>
+        <% end %>
+      </div>
+        <%= form_with(model:[@book, @book_comment], local:true) do |f| %>
+        <%= f.text_area :comment %>
+        <%= f.submit "送信" %>
+        <% end %>
     </div>
   </div>
 </div>
